@@ -11,7 +11,7 @@
 ## Paper (under construction)
 The paper will be updated weekly according to the work done in the project.
 
-[Scene Understanding for Autonomous Vehicles]()
+[Scene Understanding for Autonomous Vehicles](https://www.overleaf.com/read/tkmjzgbxwzmt)
 
 ## Weekly progress slides
 Slides summarizing the work done each week

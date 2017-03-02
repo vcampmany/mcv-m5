@@ -1,23 +1,32 @@
-# mcv-m5
-Master in Computer Vision - M5 Visual recognition
+# Scene Understanding for Autonomous Vehicles
 
-## Fork this project
-Fork this project to start your group project. Add dvazquezcvc and lluisgomez as contributors.
+## Authors
 
-## Project description
-Download the [Overleaf document](https://www.overleaf.com/read/qrjbtzwtjhmx)
+* Arnau Baró 
+* Pau Cebrián
+* Victor Campmany
+* Guillem Cucurull
 
-## Project slides
-- Google slides for [Week 1](https://docs.google.com/presentation/d/1A6hgbNn8N-Iq8MhSa_RPIyf87DBL6PCtoDzy1zqS5Xs/edit?usp=sharing)
-- Google slides for Week 2 (T.B.A.)
-- Google slides for Week 3 (T.B.A.)
-- Google slides for Week 4 (T.B.A.)
-- Google slides for Week 5 (T.B.A.)
-- Google slides for Week 6 (T.B.A.)
-- Google slides for Week 7 (T.B.A.)
 
-## Peer review
-- Intra-group evaluation form for Week 2 (T.B.A.)
-- Intra-group evaluation form for Week 4 (T.B.A.)
-- Intra-group evaluation form for Week 6 (T.B.A.)
-- Intra-group evaluation form for Week 7 (T.B.A.)
+## Paper (under construction)
+The paper will be updated weekly according to the work done in the project.
+
+[Scene Understanding for Autonomous Vehicles]()
+
+## Weekly progress slides
+Slides summarizing the work done each week
+
+* [Week 1] (https://docs.google.com/presentation/d/1V-ui0jbUjdvCARN4frC-gQrkKvEKChS92FLr5iQ614o/edit?usp=sharing)
+
+## References
+
+[1] K. Simonyan and A. Zisserman, “Very deep convolutional networks for large-scale
+image recognition,” CoRR, vol. abs/1409.1556, 2014. **[SUMMARY (TODO)]()**
+
+[2] C. Szegedy, W. Liu, Y. Jia, P. Sermanet, S. Reed, D. Anguelov, D. Erhan, V. Vanhoucke,
+and A. Rabinovich, “Going deeper with convolutions,” in Computer Vision
+and Pattern Recognition (CVPR), 2015. **[SUMMARY (TODO)]()**
+
+[3] K. He, X. Zhang, S. Ren, and J. Sun, “Deep residual learning for image recognition,”
+in arXiv prepring arXiv:1506.01497, 2015. **[SUMMARY (TODO)]()**
+

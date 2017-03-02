@@ -1,6 +1,6 @@
 # Scene Understanding for Autonomous Vehicles
 
-## Authors
+## Authors (Team name)
 
 * Arnau Baró 
 * Pau Cebrián
@@ -20,13 +20,10 @@ Slides summarizing the work done each week
 
 ## References
 
-[1] K. Simonyan and A. Zisserman, “Very deep convolutional networks for large-scale
-image recognition,” CoRR, vol. abs/1409.1556, 2014. **[SUMMARY (TODO)]()**
+Simonyan, K., & Zisserman, A. (2014). Very deep convolutional networks for large-scale image recognition. arXiv preprint arXiv:1409.1556. ** Paper summary **
 
-[2] C. Szegedy, W. Liu, Y. Jia, P. Sermanet, S. Reed, D. Anguelov, D. Erhan, V. Vanhoucke,
-and A. Rabinovich, “Going deeper with convolutions,” in Computer Vision
-and Pattern Recognition (CVPR), 2015. **[SUMMARY (TODO)]()**
+He, K., Zhang, X., Ren, S., & Sun, J. (2016). Deep residual learning for image recognition. In Proceedings of the IEEE Conference on Computer Vision and Pattern Recognition (pp. 770-778). ** Paper summary **
 
-[3] K. He, X. Zhang, S. Ren, and J. Sun, “Deep residual learning for image recognition,”
-in arXiv prepring arXiv:1506.01497, 2015. **[SUMMARY (TODO)]()**
+
+
 

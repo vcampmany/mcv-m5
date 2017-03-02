@@ -2,10 +2,10 @@
 
 ## Authors (Team name)
 
-* Arnau Baró 
-* Pau Cebrián
-* Victor Campmany
-* Guillem Cucurull
+* Arnau Baró - 
+* Pau Cebrián - 
+* Victor Campmany - vcampmany@gmail.com
+* Guillem Cucurull - 
 
 
 ## Paper (under construction)
@@ -20,9 +20,9 @@ Slides summarizing the work done each week
 
 ## References
 
-Simonyan, K., & Zisserman, A. (2014). Very deep convolutional networks for large-scale image recognition. arXiv preprint arXiv:1409.1556. ** Paper summary **
+Simonyan, K., & Zisserman, A. (2014). Very deep convolutional networks for large-scale image recognition. arXiv preprint arXiv:1409.1556. **Paper summary**
 
-He, K., Zhang, X., Ren, S., & Sun, J. (2016). Deep residual learning for image recognition. In Proceedings of the IEEE Conference on Computer Vision and Pattern Recognition (pp. 770-778). ** Paper summary **
+He, K., Zhang, X., Ren, S., & Sun, J. (2016). Deep residual learning for image recognition. In Proceedings of the IEEE Conference on Computer Vision and Pattern Recognition (pp. 770-778). **Paper summary**
 
 
 

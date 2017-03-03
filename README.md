@@ -5,7 +5,7 @@
 * Arnau Baró - 
 * Pau Cebrián - 
 * Victor Campmany - vcampmany@gmail.com
-* Guillem Cucurull - 
+* Guillem Cucurull - gcucurull@gmail.com
 
 
 ## Paper (under construction)

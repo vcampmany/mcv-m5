@@ -2,7 +2,7 @@
 
 ## Authors (Team name)
 
-* Arnau Baró - 
+* Arnau Baró - arbamas@gmail.com
 * Pau Cebrián - 
 * Victor Campmany - vcampmany@gmail.com
 * Guillem Cucurull - gcucurull@gmail.com

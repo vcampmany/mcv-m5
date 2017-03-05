@@ -9,4 +9,4 @@ Their main contribution is the definition on this architecture which contains re
 The rest of the work tests the performance of the network. And they demonstrate that they can train deeper nets by improving performance. Finally, created a ResNet of 152 layers.
 
 ### References
-[1] Kaiming He, Xiangyu Zhang, Shaoqing Ren, Jian Sun (2015). Deep Residual Learning for Image Recognition.
+[1] Kaiming He, Xiangyu Zhang, Shaoqing Ren, Jian Sun (2015). Deep Residual Learning for Image Recognition. In Proceedings of the IEEE Conference on Computer Vision and Pattern Recognition (pp. 770-778)

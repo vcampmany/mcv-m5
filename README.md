@@ -1,6 +1,6 @@
 # Scene Understanding for Autonomous Vehicles
 
-## Authors (Team name)
+## Authors (GAPVision)
 
 * Arnau Baró - arbamas@gmail.com
 * Pau Cebrián - paucebr@gmail.com

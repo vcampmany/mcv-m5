@@ -9,7 +9,7 @@ from keras.utils.visualize_util import plot
 #from models.lenet import build_lenet
 #from models.alexNet import build_alexNet
 from models.vgg import build_vgg
-#from models.resnet import build_resnet50
+from models.resnet import build_resnet50
 #from models.inceptionV3 import build_inceptionV3
 
 # Detection models
@@ -145,6 +145,10 @@ class Model_Factory():
                               freeze_layers_from=cf.freeze_layers_from)
         elif cf.model_name == 'resnet50':
             model = build_resnet50(in_shape, cf.dataset.n_classes, cf.weight_decay,
+                                   load_pretrained=cf.load_imageNet,
+                                   freeze_layers_from=cf.freeze_layers_from)
+        elif cf.model_name == 'wideresnet':
+            model = build_wideresnet(in_shape, cf.dataset.n_classes, cf.weight_decay,
                                    load_pretrained=cf.load_imageNet,
                                    freeze_layers_from=cf.freeze_layers_from)
         elif cf.model_name == 'InceptionV3':

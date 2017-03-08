@@ -7,7 +7,6 @@
 * Victor Campmany - vcampmany@gmail.com
 * Guillem Cucurull - gcucurull@gmail.com
 
-
 ## Paper (under construction)
 The paper will be updated weekly according to the work done in the project.
 

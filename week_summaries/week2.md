@@ -34,6 +34,29 @@ Level of completeness of the goals of this week
   - [x] Different pre-processings
 - [x] Transfer Learning to BelgiumTS dataset
 
+#### Task B
+- [x] VGG from scratch on KITTI dataset
+- [x] VGG finetunned on KITTI dataset
+
+#### Task C
+- [x] Implement InceptionV3 in Keras
+- [x] Train from scratch on TT100K dataset
+- [x] Train finetunned on TT100K dataset
+
+#### Task D
+- [x] Implement Resnet in Keras
+- [x] Train from scratch on TT100K dataset
+- [x] Train finetunned on TT100K dataset
+
+#### Task E
+- [x] Implement VGG that accepts l2 regularization
+- [ ] Train with data augmentation
+- [x] Different Learning rate (with KITTI)
+- [x] Implement Another architechture (Wide Resnet)
+
+#### Task F
+- [ ] Write report
+
 ## Links
 Link to the Google Slide presentation
 Link to a Google Drive with the weights of the model

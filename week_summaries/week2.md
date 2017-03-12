@@ -87,5 +87,6 @@ Level of completeness of the goals of this week
 - [ ] Write report
 
 ## Links
-Link to the Google Slide presentation
+[Link](https://docs.google.com/presentation/d/1V-ui0jbUjdvCARN4frC-gQrkKvEKChS92FLr5iQ614o/edit#slide=id.g1d0f8546dc_1_0) to the Google Slide presentation
+
 Link to a Google Drive with the weights of the model

@@ -27,6 +27,8 @@ In this section we report the results obtained in the set set of different datas
 | Wide RN scratch      | 0.1635 | 0.9751 |
 | Wide RN finetunning  | 0.1316 | 0.9821 |
 
+The Wide Resnet used in the experiments is the WRN-50-2-bottleneck model used by the author on the Imagenet dataset, which achieves an error rare 3% lower than the original Resnet of 50 layers.
+
 | KITTI             | Loss   | Accuracy  |
 | ----------------- |:------:| :-----:|
 | VGG from scratch  | x | x |

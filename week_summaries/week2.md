@@ -10,7 +10,33 @@ We have added the following files:
 * `script analyze dataset`: explain
 
 ## Results
-Results of the different experiments
+In this section we report the results obtained in the set set of different datasets.
+
+| TT100K            | Loss   | Accuracy  |
+| ----------------- |:------:| :-----:|
+| VGG baseline      | 0.6443 | 0.9561 |
+| VGG resize to 112 | 0.6082 | 0.9531 |
+| VGG crop 224      | 0.3352 | 0.9690 |
+| VGG normalize featurewise | 0.3633 | 0.9393 |
+| VGG normalize Imagenet    | 0.5351 | 0.9609 |
+| VGG l2_reg=0.0005         | 0.4517 | 0.9524 |
+| InceptionV3 scratch       | x | x |
+| InceptionV3 finetunning   | x | x |
+| Resnet scratch       | x | x |
+| Resnet finetunning   | x | x |
+| Wide RN scratch      | 0.1635 | 0.9751 |
+| Wide RN finetunning  | 0.1316 | 0.9821 |
+
+| KITTI             | Loss   | Accuracy  |
+| ----------------- |:------:| :-----:|
+| VGG from scratch  | x | x |
+| VGG finetunned    | x | x |
+
+For the tests on the KITTI dataset we had to reduce the learning rate from 0.0001 to 0.00001 (using RMSProp optimizer). Otherwise, at the middle of the training stage the loss would suddenly increase.
+
+| BTS            | Loss   | Accuracy  |
+| ----------------- |:------:| :-----:|
+| VGG transfer      | 0.4755 | 0.9638 |
 
 ## Instructions
 The usage of the code is easy. First we have to define a configuration file inside the `config` folder, and then call `train.py` with the desired configuration:

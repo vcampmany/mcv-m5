@@ -10,7 +10,8 @@ from keras.utils.visualize_util import plot
 #from models.alexNet import build_alexNet
 from models.vgg import build_vgg
 from models.resnet import build_resnet50
-#from models.inceptionV3 import build_inceptionV3
+from models.wideresnet import build_wideresnet
+from models.inceptionV3 import build_inceptionV3
 
 # Detection models
 from models.yolo import build_yolo
@@ -78,7 +79,7 @@ class Model_Factory():
     # Creates a Model object (not a Keras model)
     def make(self, cf, optimizer=None):
         if cf.model_name in ['lenet', 'alexNet', 'vgg16', 'vgg19', 'resnet50',
-                             'InceptionV3', 'fcn8', 'unet', 'segnet',
+                             'InceptionV3', 'fcn8', 'unet', 'segnet', 'wideresnet',
                              'segnet_basic', 'resnetFCN', 'yolo']:
             if optimizer is None:
                 raise ValueError('optimizer can not be None')
@@ -138,7 +139,7 @@ class Model_Factory():
         elif cf.model_name == 'vgg16':
             model = build_vgg(in_shape, cf.dataset.n_classes, 16, cf.weight_decay,
                               load_pretrained=cf.load_imageNet,
-                              freeze_layers_from=cf.freeze_layers_from)
+                              freeze_layers_from=cf.freeze_layers_from, out_name=cf.dataset_name)
         elif cf.model_name == 'vgg19':
             model = build_vgg(in_shape, cf.dataset.n_classes, 19, cf.weight_decay,
                               load_pretrained=cf.load_imageNet,
@@ -166,8 +167,8 @@ class Model_Factory():
 
         # Load pretrained weights
         if cf.load_pretrained:
-            print('   loading model weights from: ' + cf.weights_file + '...')
-            model.load_weights(cf.weights_file, by_name=True)
+            print('   loading model weights from: ' + cf.pretrained_weights_file + '...')
+            model.load_weights(cf.pretrained_weights_file, by_name=True)
 
         # Compile model
         model.compile(loss=loss, metrics=metrics, optimizer=optimizer)

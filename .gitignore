@@ -3,3 +3,5 @@
 
 # JetBrains IDEs
 .idea
+
+*.hkl

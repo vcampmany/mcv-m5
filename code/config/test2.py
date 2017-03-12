@@ -46,7 +46,7 @@ seed_test                    = 1924            # Random seed for the testing shu
 # Training parameters
 optimizer                    = 'rmsprop'       # Optimizer
 learning_rate                = 0.0001          # Training learning rate
-weight_decay                 = 0.0005              # Weight decay or L2 parameter norm penalty
+weight_decay                 = 0.              # Weight decay or L2 parameter norm penalty
 n_epochs                     = 30              # Number of epochs during training
 
 # Callback save results
@@ -75,10 +75,10 @@ plotHist_enabled             = True            # Enable the Callback
 plotHist_verbose             = 0               # Verbosity of the callback
 
 # Data augmentation for training and normalization
-norm_imageNet_preprocess           = True     # Normalize following imagenet procedure
+norm_imageNet_preprocess           = False     # Normalize following imagenet procedure
 norm_fit_dataset                   = True      # If True it recompute std and mean from images. Either it uses the std and mean set at the dataset config file
 norm_rescale                       = 1/255.    # Scalar to divide and set range 0-1
-norm_featurewise_center            = False     # Substract mean - dataset
+norm_featurewise_center            = True     # Substract mean - dataset
 norm_featurewise_std_normalization = False     # Divide std - dataset
 norm_samplewise_center             = False     # Substract mean - sample
 norm_samplewise_std_normalization  = False     # Divide std - sample

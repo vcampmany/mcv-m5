@@ -5,7 +5,7 @@ dataset_name2                = None            # Second dataset name. None if no
 perc_mb2                     = None            # Percentage of data from the second dataset in each minibatch
 
 # Model
-model_name                   = 'vgg16'          # Model to use ['fcn8' | 'lenet' | 'alexNet' | 'vgg16' |  'vgg19' | 'resnet50' | 'InceptionV3']
+model_name                   = 'wideresnet'          # Model to use ['fcn8' | 'lenet' | 'alexNet' | 'vgg16' |  'vgg19' | 'resnet50' | 'InceptionV3']
 freeze_layers_from           = None            # Freeze layers from 0 to this layer during training (Useful for finetunning) [None | 'base_model' | Layer_id]
 show_model                   = False           # Show the architecture layers
 load_imageNet                = False           # Load Imagenet weights and normalize following imagenet procedure
@@ -28,9 +28,9 @@ debug_n_epochs               = 2               # N of training epochs in debug m
 batch_size_train             = 10              # Batch size during training
 batch_size_valid             = 30              # Batch size during validation
 batch_size_test              = 30              # Batch size during testing
-crop_size_train              = (224, 224)            # Crop size during training (Height, Width) or None
-crop_size_valid              = (224, 224)            # Crop size during validation
-crop_size_test               = (224, 224)            # Crop size during testing
+crop_size_train              = (224,224)            # Crop size during training (Height, Width) or None
+crop_size_valid              = (224,224)            # Crop size during validation
+crop_size_test               = (224,224)            # Crop size during testing
 resize_train                 = (256, 256)      # Resize the image during training (Height, Width) or None
 resize_valid                 = (256, 256)      # Resize the image during validation
 resize_test                  = (256, 256)      # Resize the image during testing
@@ -46,7 +46,7 @@ seed_test                    = 1924            # Random seed for the testing shu
 # Training parameters
 optimizer                    = 'rmsprop'       # Optimizer
 learning_rate                = 0.0001          # Training learning rate
-weight_decay                 = 0.0005              # Weight decay or L2 parameter norm penalty
+weight_decay                 = 0.              # Weight decay or L2 parameter norm penalty
 n_epochs                     = 30              # Number of epochs during training
 
 # Callback save results
@@ -75,7 +75,7 @@ plotHist_enabled             = True            # Enable the Callback
 plotHist_verbose             = 0               # Verbosity of the callback
 
 # Data augmentation for training and normalization
-norm_imageNet_preprocess           = True     # Normalize following imagenet procedure
+norm_imageNet_preprocess           = False     # Normalize following imagenet procedure
 norm_fit_dataset                   = True      # If True it recompute std and mean from images. Either it uses the std and mean set at the dataset config file
 norm_rescale                       = 1/255.    # Scalar to divide and set range 0-1
 norm_featurewise_center            = False     # Substract mean - dataset

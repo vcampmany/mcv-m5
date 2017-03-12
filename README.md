@@ -1,4 +1,5 @@
 # Scene Understanding for Autonomous Vehicles
+Autonomous Driving from an inboard camera is a highly complex task that can be approached using computer vision techniques. In this paper we present a deep learning approach for scene understanding for autonomous vehicles, focusing on 3 stages of increasing complexity: object recognition, object detection and semantic segmentation of the scene. This three stages have a common goal, understand the scene and make consequent navigation decisions. For the object recognition stage we have tested several Convolutional Neural Networks in a variety of datasets to asses their performance.
 
 ## Authors (GAPVision)
 

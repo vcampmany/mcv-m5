@@ -25,7 +25,14 @@ python train.py -c config/kitti_scratch.py -e kitti_scratch
 Where `config/kitti_scratch.py` is the configuration file that has the details of the training procedure.
 
 ## Goals
-Indicate the level of completeness of the goals of this week
+Level of completeness of the goals of this week
+#### Task A
+- [x] Analyze Dataset
+- [x] Run and evaluate VGG
+- [x] Evaluate different techniques
+  - [x] Resize vs Crop
+  - [x] Different pre-processings
+- [x] Transfer Learning to BelgiumTS dataset
 
 ## Links
 Link to the Google Slide presentation

@@ -16,7 +16,7 @@ The paper will be updated weekly according to the work done in the project.
 ## Weekly progress slides
 Slides summarizing the work done each week
 
-* [Week 1] (https://docs.google.com/presentation/d/1V-ui0jbUjdvCARN4frC-gQrkKvEKChS92FLr5iQ614o/edit?usp=sharing)
+* [Slides] (https://docs.google.com/presentation/d/1V-ui0jbUjdvCARN4frC-gQrkKvEKChS92FLr5iQ614o/edit?usp=sharing)
 
 ## Weekly summaries
 Explanations of the work and tasks done each week

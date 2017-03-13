@@ -7,7 +7,7 @@ We have added the following files:
 * `models/inceptionV3.py`: implementaion of the [InceptionV3](https://arxiv.org/pdf/1512.00567.pdf). The model is already implemented in keras, we just needed to integrate the model to our framework.
 * `models/resnet.py`: Keras implementaion of the [ResNet](https://arxiv.org/pdf/1512.03385.pdf). As the model is already implemented in keras we just needed to integrate the model to our framework.
 * `models/keras_vgg16_l2reg.py`: We have adapted the Keras model of the VGG16 network to accept l2 regularization (weight decay). The call has the same format as the Keras one, but we have added an extra argument to the function call the l2 regularization trade off.
-* `script analyze dataset`: Extract probability distribution and average image of each dataset class, splited in training, test and validation sets. Allows to analyze our datasets distribution in order to further understanding of our results.
+* `script analyze dataset`: Extracts probability distribution and average image of each dataset class, splited in training, test and validation sets. Allows to analyze our datasets distribution in order to further understanding of our results.
 
 ## Results
 In this section we report the results obtained in the test set of different datasets.

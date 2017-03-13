@@ -32,7 +32,7 @@ The Wide Resnet used in the experiments is the WRN-50-2-bottleneck model used by
 
 | KITTI             | Loss   | Accuracy  |
 | ----------------- |:------:| :-----:|
-| VGG from scratch  | x | x |
+| VGG from scratch  | 0.1357 | 0.9710 |
 | VGG finetunned    | x | x |
 
 For the tests on the KITTI dataset we had to reduce the learning rate from 0.0001 to 0.00001 (using RMSProp optimizer). Otherwise, at the middle of the training stage the loss would suddenly increase.

@@ -16,11 +16,11 @@ The paper will be updated weekly according to the work done in the project.
 ## Weekly progress slides
 Slides summarizing the work done each week
 
-* [Slides] (https://docs.google.com/presentation/d/1V-ui0jbUjdvCARN4frC-gQrkKvEKChS92FLr5iQ614o/edit?usp=sharing)
+* [Slides](https://docs.google.com/presentation/d/1V-ui0jbUjdvCARN4frC-gQrkKvEKChS92FLr5iQ614o/edit?usp=sharing)
 
 ## Weekly summaries
 Explanations of the work and tasks done each week
-* [Week 2 - Object Recognition] (https://github.com/vcampmany/mcv-m5/blob/master/week_summaries/week2.md)
+* [Week 2 - Object Recognition](https://github.com/vcampmany/mcv-m5/blob/master/week_summaries/week2.md)
 
 ## References
 

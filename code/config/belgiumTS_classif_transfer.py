@@ -1,20 +1,21 @@
 # Dataset
 problem_type                 = 'classification'# ['classification' | 'detection' | 'segmentation']
-dataset_name                 = 'TT100K_trafficSigns'# Dataset name
+dataset_name                 = 'BelgiumTSC'	   # Dataset name
 dataset_name2                = None            # Second dataset name. None if not Domain Adaptation
 perc_mb2                     = None            # Percentage of data from the second dataset in each minibatch
 
 # Model
 model_name                   = 'vgg16'          # Model to use ['fcn8' | 'lenet' | 'alexNet' | 'vgg16' |  'vgg19' | 'resnet50' | 'InceptionV3']
-freeze_layers_from           = None            # Freeze layers from 0 to this layer during training (Useful for finetunning) [None | 'base_model' | Layer_id]
+freeze_layers_from           = 'base_model'    # Freeze layers from 0 to this layer during training (Useful for finetunning) [None | 'base_model' | Layer_id]
 show_model                   = False           # Show the architecture layers
 load_imageNet                = False           # Load Imagenet weights and normalize following imagenet procedure
-load_pretrained              = False           # Load a pretrained model for doing finetuning
-weights_file                 = 'weights.hdf5'  # Training weight file name
+load_pretrained              = True            # Load a pretrained model for doing finetuning
+weights_file                 = '/path/to/pretrained/weights.hdf5'  # Training weight file name
+weights_test_file            = 'weights.hdf5'  # Testing weight file name. If this variable doesn't exist, the weights created in the training are used
 
 # Parameters
 train_model                  = True            # Train the model
-test_model                   = True           # Test the model
+test_model                   = True            # Test the model
 pred_model                   = False           # Predict using the model
 
 # Debug
@@ -28,12 +29,12 @@ debug_n_epochs               = 2               # N of training epochs in debug m
 batch_size_train             = 10              # Batch size during training
 batch_size_valid             = 30              # Batch size during validation
 batch_size_test              = 30              # Batch size during testing
-crop_size_train              = (224, 224)            # Crop size during training (Height, Width) or None
-crop_size_valid              = (224, 224)            # Crop size during validation
-crop_size_test               = (224, 224)            # Crop size during testing
-resize_train                 = (256, 256)      # Resize the image during training (Height, Width) or None
-resize_valid                 = (256, 256)      # Resize the image during validation
-resize_test                  = (256, 256)      # Resize the image during testing
+crop_size_train              = None            # Crop size during training (Height, Width) or None
+crop_size_valid              = None            # Crop size during validation
+crop_size_test               = None            # Crop size during testing
+resize_train                 = (224, 224)      # Resize the image during training (Height, Width) or None
+resize_valid                 = (224, 224)      # Resize the image during validation
+resize_test                  = (224, 224)      # Resize the image during testing
 
 # Data shuffle
 shuffle_train                = True            # Whether to shuffle the training data
@@ -46,7 +47,7 @@ seed_test                    = 1924            # Random seed for the testing shu
 # Training parameters
 optimizer                    = 'rmsprop'       # Optimizer
 learning_rate                = 0.0001          # Training learning rate
-weight_decay                 = 0.0005              # Weight decay or L2 parameter norm penalty
+weight_decay                 = 0.              # Weight decay or L2 parameter norm penalty
 n_epochs                     = 30              # Number of epochs during training
 
 # Callback save results
@@ -57,9 +58,9 @@ save_results_n_legend_rows   = 1               # Number of rows when showwing th
 
 # Callback early stoping
 earlyStopping_enabled        = True            # Enable the Callback
-earlyStopping_monitor        = 'loss'           # Metric to monitor
-earlyStopping_mode           = 'min'           # Mode ['max' | 'min']
-earlyStopping_patience       = 10             # Max patience for the early stopping
+earlyStopping_monitor        = 'acc'           # Metric to monitor
+earlyStopping_mode           = 'max'           # Mode ['max' | 'min']
+earlyStopping_patience       = 100             # Max patience for the early stopping
 earlyStopping_verbose        = 0               # Verbosity of the early stopping
 
 # Callback model check point
@@ -80,7 +81,7 @@ lrDecayScheduler_epochs      = [5, 10, 20]     # List of epochs were decay is ap
 lrDecayScheduler_rate        = 2               # Decay rate (new_lr = lr / decay_rate). Usually between 2 and 10.
 
 # Data augmentation for training and normalization
-norm_imageNet_preprocess           = True     # Normalize following imagenet procedure
+norm_imageNet_preprocess           = False     # Normalize following imagenet procedure
 norm_fit_dataset                   = True      # If True it recompute std and mean from images. Either it uses the std and mean set at the dataset config file
 norm_rescale                       = 1/255.    # Scalar to divide and set range 0-1
 norm_featurewise_center            = False     # Substract mean - dataset

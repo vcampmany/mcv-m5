@@ -38,10 +38,7 @@ def build_vgg(img_shape=(3, 224, 224), n_classes=1000, n_layers=16, l2_reg=0.,
     x = Dropout(0.5)(x)
     x = Dense(4096, activation='relu', name='dense_2', W_regularizer=l2(l2_reg))(x)
     x = Dropout(0.5)(x)
-    last_name = 'dense_3'
-    if out_name:
-        last_name += '_'+out_name+'_'+str(n_classes)
-    x = Dense(n_classes, name=last_name, W_regularizer=l2(l2_reg))(x)
+    x = Dense(n_classes, name='dense_3_{}'.format(n_classes), W_regularizer=l2(l2_reg))(x)
     predictions = Activation("softmax", name="softmax")(x)
 
     # This is the model we will train

@@ -26,7 +26,7 @@ In this section we report the results obtained in the test set of different data
 | Resnet finetunning   | 0.5185 | 0.8597 |
 | Wide RN scratch      | 0.1635 | 0.9751 |
 | Wide RN finetunning  | 0.1316 | 0.9821 |
-| Wide RN dataug  | 0.1445 | 0.1445 |
+| Wide RN dataug  | 0.1445 | 0.9779 |
 
 The Wide Resnet used in the experiments is the WRN-50-2-bottleneck model used by the author on the Imagenet dataset, which achieves an error rare 3% lower than the original Resnet of 50 layers.
 
@@ -79,7 +79,7 @@ Level of completeness of the goals of this week
 
 #### Task E
 - [x] Implement VGG that accepts l2 regularization
-- [ ] Train with data augmentation
+- [x] Train with data augmentation
 - [x] Different Learning rate (with KITTI)
 - [x] Implement Another architechture (Wide Resnet)
 

@@ -89,4 +89,4 @@ Level of completeness of the goals of this week
 ## Links
 [Link](https://docs.google.com/presentation/d/1V-ui0jbUjdvCARN4frC-gQrkKvEKChS92FLr5iQ614o/edit#slide=id.g1d0f8546dc_1_0) to the Google Slide presentation
 
-[Link](https://drive.google.com/drive/u/0/folders/0B3RGXagP6D6sZ19SdlpPYkUyZE0) to a Google Drive with the weights of the model
+[Link](https://drive.google.com/open?id=0B3RGXagP6D6sQUptXzhBd3U3Qzg) to a Google Drive with the weights of the model

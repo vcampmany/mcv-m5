@@ -24,6 +24,7 @@ from keras.preprocessing.image import (Iterator,
 
 from tools.save_images import save_img2
 from tools.yolo_utils import yolo_build_gt_batch
+from tools.ssd_utils import BBoxUtility
 
 # Pad image
 def pad_image(x, pad_amount, mode='reflect', constant=0.):
@@ -220,7 +221,8 @@ class ImageDataGenerator(object):
                  class_mode='categorical',
                  rgb_mean=None,
                  rgb_std=None,
-                 crop_size=None):
+                 crop_size=None,
+                 model_name=None):
         if dim_ordering == 'default':
             dim_ordering = K.image_dim_ordering()
         self.__dict__.update(locals())
@@ -275,6 +277,8 @@ class ImageDataGenerator(object):
         self.class_mode = class_mode
         self.has_gt_image = True if self.class_mode == 'segmentation' else False
 
+        self.model_name = model_name
+
     def flow(self, X, y=None, batch_size=32, shuffle=True, seed=None,
              save_to_dir=None, save_prefix='', save_format='jpeg'):
         return NumpyArrayIterator(
@@ -300,7 +304,7 @@ class ImageDataGenerator(object):
             batch_size=batch_size, shuffle=shuffle, seed=seed,
             gt_directory=gt_directory,
             save_to_dir=save_to_dir, save_prefix=save_prefix,
-            save_format=save_format)
+            save_format=save_format, model_name=self.model_name)
 
     def flow_from_directory2(self, directory,
                              resize=None, target_size=(256, 256),
@@ -840,7 +844,7 @@ class DirectoryIterator(Iterator):
                  dim_ordering='default',
                  classes=None, class_mode='categorical',
                  batch_size=32, shuffle=True, seed=None, gt_directory=None,
-                 save_to_dir=None, save_prefix='', save_format='jpeg'):
+                 save_to_dir=None, save_prefix='', save_format='jpeg', model_name=None):
         # Check dim order
         if dim_ordering == 'default':
             dim_ordering = K.image_dim_ordering()
@@ -853,6 +857,7 @@ class DirectoryIterator(Iterator):
         self.save_to_dir = save_to_dir
         self.save_prefix = save_prefix
         self.save_format = save_format
+        self.model_name = model_name
 
         # Check target size
         if target_size is None and batch_size > 1:
@@ -904,6 +909,15 @@ class DirectoryIterator(Iterator):
         self.nb_sample = 0
         self.filenames = []
         self.classes = []
+
+        ###########################
+        ## SDD utility if needed ##
+        ###########################
+        if "ssd" in self.model_name:
+            self.ssd_generator = BBoxUtility(self.nb_class)
+        else:
+            self.ssd_generator = None
+
 
         # Get filenames
         if self.class_mode == 'detection':
@@ -1047,7 +1061,10 @@ class DirectoryIterator(Iterator):
         elif self.class_mode == 'detection':
             # TODO detection: check model, other networks may expect a different batch_y format and shape
             # YOLOLoss expects a particular batch_y format and shape
-            batch_y = yolo_build_gt_batch(batch_y, self.image_shape, self.nb_class)
+            if "yolo" in self.model_name:
+                batch_y = yolo_build_gt_batch(batch_y, self.image_shape, self.nb_class)
+            elif "ssd" in self.model_name:
+                batch_y = self.ssd_generator.ssd_build_gt_batch(batch_y, self.image_shape)
         elif self.class_mode == None:
             return batch_x
 

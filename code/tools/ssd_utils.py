@@ -27,7 +27,7 @@ class BBoxUtility(object):
     """
     # TODO add setter methods for nms_thresh and top_K
     def __init__(self, num_classes, priors=None, overlap_threshold=0.5,
-                 nms_thresh=0.45, top_k=400):
+                 nms_thresh=0.45, top_k=400, sess=False):
         self.num_classes = num_classes+1
 
         # get default priors (https://github.com/rykov8/ssd_keras/raw/master/prior_boxes_ssd300.pkl)
@@ -45,6 +45,9 @@ class BBoxUtility(object):
         self.nms = tf.image.non_max_suppression(self.boxes, self.scores,
                                                 self._top_k,
                                                 iou_threshold=self._nms_thresh)
+        if sess:
+            self.sess = tf.Session(config=tf.ConfigProto())
+
     @property
     def nms_thresh(self):
         return self._nms_thresh
@@ -273,3 +276,38 @@ class BBoxUtility(object):
                 results[-1] = results[-1][argsort]
                 results[-1] = results[-1][:keep_top_k]
         return results
+
+# For metrics
+class BoundBox:
+    def __init__(self, classes):
+        self.minx, self.miny = float(), float()
+        self.maxx, self.maxy = float(), float()
+        self.c = float()
+        self.class_num = classes
+        self.probs = np.zeros((classes,))
+
+def overlap(x1min,x1max,x2min,x2max):
+    l1 = x1min;
+    l2 = x2min;
+    left = max(l1, l2)
+    r1 = x1max;
+    r2 = x2max;
+    right = min(r1, r2)
+    return right - left;
+
+def box_intersection(a, b):
+    w = overlap(a.xmin, a.xmax, b.xmin, b.xmax);
+    h = overlap(a.ymin, a.ymax, b.ymin, b.ymax);
+    if w < 0 or h < 0: return 0;
+    area = w * h;
+    return area;
+
+def box_union(a, b):
+    i = box_intersection(a, b);
+    a_area = (a.xmax-a.xmin) * (a.ymax-a.ymin)
+    b_area = (b.xmax-b.xmin) * (b.ymax-b.ymin)
+    u = a_area + b_area - i;
+    return u;
+
+def box_iou(a, b):
+    return box_intersection(a, b) / box_union(a, b);

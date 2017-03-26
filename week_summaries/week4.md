@@ -1,5 +1,5 @@
 # Object Detection
-Intro
+During these two weeks we have tried different CNN architectures to perform object detection. In particular we trained the following networks: YOLO, Tiny YOLO and SSD. As datasets we used again the TT100K dataset, but instead of having crops, we trained with complete images. We have also used the Udacity dataset which has really different training and testing images, in the paper we introduce the solution which leads to a better dataset.
 
 ## Code
 We have added the following files:
@@ -79,6 +79,6 @@ Level of completeness of the goals of this week
 - [ ] Write report
 
 ## Links
-[Link]() to the Google Slide presentation
+[Link](https://docs.google.com/presentation/d/1V-ui0jbUjdvCARN4frC-gQrkKvEKChS92FLr5iQ614o/edit#slide=id.g1d0f8546dc_1_0) to the Google Slide presentation
 
-[Link]() to a Google Drive with the weights of the model
+[Link](https://drive.google.com/open?id=0B3RGXagP6D6sQUptXzhBd3U3Qzg) to a Google Drive with the weights of the model

@@ -19,7 +19,7 @@ pred_model                   = True            # Predict using the model
 
 # Debug
 debug                        = False           # Use only few images for debuging
-debug_images_train           = 16              # N images for training in debug mode (-1 means all)
+debug_images_train           = 64              # N images for training in debug mode (-1 means all)
 debug_images_valid           = 16              # N images for validation in debug mode (-1 means all)
 debug_images_test            = 16              # N images for testing in debug mode (-1 means all)
 debug_n_epochs               = 2              # N of training epochs in debug mode

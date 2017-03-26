@@ -361,9 +361,6 @@ def SSDLoss(num_classes, alpha=1.0, neg_pos_ratio=2.0, background_label_id=0, ne
 """
 def SSDMetrics():
   def _SSDMetrics(y_true, y_pred):
-    print(y_true.shape)
-    print(y_pred.shape)
-    input()
     return {'avg_iou': tf.reduce_mean(np.asarray([2]))}
 
   return _SSDMetrics

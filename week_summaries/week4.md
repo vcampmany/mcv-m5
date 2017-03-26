@@ -3,7 +3,11 @@ During these two weeks we have tried different CNN architectures to perform obje
 
 ## Code
 We have added the following files:
-* To be completed
+* `models/ssd.py`: this is the Keras implementation of the Single Shot MUltibox Detector from [this paper](https://arxiv.org/abs/1512.02325). The original code can be found [here](https://github.com/rykov8/ssd_keras). The author also provides the weights of the network trained on Imagenet, so the implementation allows to either train the model from scratch or load the weights trained on Imagenet.
+* `tools/ssd_utils.py`: This file contains many utilities related to the SSD model. It defines how to read the ground truth boxes and convert them to the format used by SSD. It also defines how to map from the output of the model to the final bounding boxes.
+* `ssd_eval_detection_fscore.py`: This script computes the precision, recall and F1-score metrics of an SSD model.
+* `script analyze dataset`: Computes statistics of a given dataset, like number of classes, average size of bounding box or number of bounding boxes per class.
+* `jupyters/View SSD Boxes.ipynb`: Jupyter notebook useful to debug a SSD model an view the predicted bounding boxes.
 
 ## Results
 In this section we report the results obtained in the train, validation and test sets of different datasets.
@@ -34,21 +38,18 @@ The results on Udacity with different models:
 | Udacity (Train)    | Precision   | Recall  | F1 Score  |
 | ----------------- |:------:| :-----:|:-----:|
 | YOLO              | 0.771      | 0.665      | 0.714     |
-| Tiny YOLO         | X      | X      | X     |
 | SSD pre-trained   | 0.087      | 0.763      | 0.157     |
 | SSD from scratch  | 0.030      | 0.707      | 0.058     |
 
 | Udacity (Val)    | Precision   | Recall  | F1 Score  |
 | ----------------- |:------:| :-----:|:-----:|
 | YOLO              | 0.560      | 0.334      | 0.419     |
-| Tiny YOLO         | X      | X      | X     |
 | SSD pre-trained   | 0.075      | 0.533      | 0.132     |
 | SSD from scratch  | 0.026      | 0.547      | 0.051     |
 
 | Udacity (Test)    | Precision   | Recall  | F1 Score  |
 | ----------------- |:------:| :-----:|:-----:|
 | YOLO              | 0.523      | 0.258      | 0.346     |
-| Tiny YOLO         | X      | X      | X     |
 | SSD pre-trained   | 0.063      | 0.433      | 0.111     |
 | SSD from scratch  | 0.025      | 0.473      | 0.049     |
 

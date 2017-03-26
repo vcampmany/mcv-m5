@@ -3,9 +3,9 @@ During these two weeks we have tried different CNN architectures to perform obje
 
 ## Code
 We have added the following files:
-* `models/ssd.py`: this is the Keras implementation of the Single Shot MUltibox Detector from [this paper](https://arxiv.org/abs/1512.02325). The original code can be found [here](https://github.com/rykov8/ssd_keras). The author also provides the weights of the network trained on Imagenet, so the implementation allows to either train the model from scratch or load the weights trained on Imagenet.
+* `models/ssd.py`: this is the Keras implementation of the Single Shot Multibox Detector from [this paper](https://arxiv.org/abs/1512.02325). The original code can be found [here](https://github.com/rykov8/ssd_keras). The author also provides the weights of the network trained on Imagenet, so the implementation allows to either train the model from scratch or load the weights trained on Imagenet.
 * `tools/ssd_utils.py`: This file contains many utilities related to the SSD model. It defines how to read the ground truth boxes and convert them to the format used by SSD. It also defines how to map from the output of the model to the final bounding boxes.
-* `ssd_eval_detection_fscore.py`: This script computes the precision, recall and F1-score metrics of an SSD model.
+* `ssd_eval_detection_fscore.py`: This script computes the precision, recall and F1-score metrics of an SSD model on a given dataset.
 * `script analyze dataset`: Computes statistics of a given dataset, like number of classes, average size of bounding box or number of bounding boxes per class.
 * `jupyters/View SSD Boxes.ipynb`: Jupyter notebook useful to debug a SSD model an view the predicted bounding boxes.
 
@@ -54,7 +54,23 @@ The results on Udacity with different models:
 | SSD from scratch  | 0.025      | 0.473      | 0.049     |
 
 ## Instructions
-Explain how to run (train and eval)
+Training an object detector is quite easy. First we have to define a configuration file inside the `config` folder, and then call `train.py` with the desired configuration. To choose between the two detection models implemented, the `model_name` variable should be defined to `"ssd"`or `"yolo"`:
+```
+python train.py -c config/CONFIG_FILE
+```
+
+To evaluate a YOLO model the command is the following:
+```
+python eval_detection_fscore.py WEIGHTS_FILE DATASET [TINY]
+```
+Optionally, a third parameter `tiny` can be used if the weights file corresponds to a Tiny-YOLO network.
+
+To evaluate an SSD model the command is the following:
+```
+python ssd_eval_detection_fscore.py WEIGHTS_FILE DATASET
+```
+
+Additionally, the metrics can also be computed along with an option to plot the bounding boxes predicted by the model by using the Jupyter notebook `View SSD Boxes.ipynb` inside the folder `jupyers/`.
 
 ## Goals
 Level of completeness of the goals of this week

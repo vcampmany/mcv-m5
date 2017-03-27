@@ -3,7 +3,11 @@ During these two weeks we have tried different CNN architectures to perform obje
 
 ## Code
 We have added the following files:
-* To be completed
+* `models/ssd.py`: this is the Keras implementation of the Single Shot Multibox Detector from [this paper](https://arxiv.org/abs/1512.02325). The original code can be found [here](https://github.com/rykov8/ssd_keras). The author also provides the weights of the network trained on Imagenet, so the implementation allows to either train the model from scratch or load the weights trained on Imagenet.
+* `tools/ssd_utils.py`: This file contains many utilities related to the SSD model. It defines how to read the ground truth boxes and convert them to the format used by SSD. It also defines how to map from the output of the model to the final bounding boxes.
+* `ssd_eval_detection_fscore.py`: This script computes the precision, recall and F1-score metrics of an SSD model on a given dataset.
+* `script analyze dataset`: Computes statistics of a given dataset, like average size of bounding box or number of bounding boxes per class. Can be executed specifying the number of classes -n and dataset name -d. *e.g.  python info.py -n 3 -d Udacity*
+* `jupyters/View SSD Boxes.ipynb`: Jupyter notebook useful to debug a SSD model an view the predicted bounding boxes.
 
 ## Results
 In this section we report the results obtained in the train, validation and test sets of different datasets.
@@ -34,26 +38,39 @@ The results on Udacity with different models:
 | Udacity (Train)    | Precision   | Recall  | F1 Score  |
 | ----------------- |:------:| :-----:|:-----:|
 | YOLO              | 0.771      | 0.665      | 0.714     |
-| Tiny YOLO         | X      | X      | X     |
 | SSD pre-trained   | 0.087      | 0.763      | 0.157     |
 | SSD from scratch  | 0.030      | 0.707      | 0.058     |
 
 | Udacity (Val)    | Precision   | Recall  | F1 Score  |
 | ----------------- |:------:| :-----:|:-----:|
 | YOLO              | 0.560      | 0.334      | 0.419     |
-| Tiny YOLO         | X      | X      | X     |
 | SSD pre-trained   | 0.075      | 0.533      | 0.132     |
 | SSD from scratch  | 0.026      | 0.547      | 0.051     |
 
 | Udacity (Test)    | Precision   | Recall  | F1 Score  |
 | ----------------- |:------:| :-----:|:-----:|
 | YOLO              | 0.523      | 0.258      | 0.346     |
-| Tiny YOLO         | X      | X      | X     |
 | SSD pre-trained   | 0.063      | 0.433      | 0.111     |
 | SSD from scratch  | 0.025      | 0.473      | 0.049     |
 
 ## Instructions
-Explain how to run (train and eval)
+Training an object detector is quite easy. First we have to define a configuration file inside the `config` folder, and then call `train.py` with the desired configuration. To choose between the two detection models implemented, the `model_name` variable should be defined to `"ssd"`or `"yolo"`:
+```
+python train.py -c config/CONFIG_FILE
+```
+
+To evaluate a YOLO model the command is the following:
+```
+python eval_detection_fscore.py WEIGHTS_FILE DATASET [TINY]
+```
+Optionally, a third parameter `tiny` can be used if the weights file corresponds to a Tiny-YOLO network.
+
+To evaluate an SSD model the command is the following:
+```
+python ssd_eval_detection_fscore.py WEIGHTS_FILE DATASET
+```
+
+Additionally, the metrics can also be computed along with an option to plot the bounding boxes predicted by the model by using the Jupyter notebook `View SSD Boxes.ipynb` inside the folder `jupyers/`.
 
 ## Goals
 Level of completeness of the goals of this week

@@ -6,7 +6,7 @@ We have added the following files:
 * `models/ssd.py`: this is the Keras implementation of the Single Shot Multibox Detector from [this paper](https://arxiv.org/abs/1512.02325). The original code can be found [here](https://github.com/rykov8/ssd_keras). The author also provides the weights of the network trained on Imagenet, so the implementation allows to either train the model from scratch or load the weights trained on Imagenet.
 * `tools/ssd_utils.py`: This file contains many utilities related to the SSD model. It defines how to read the ground truth boxes and convert them to the format used by SSD. It also defines how to map from the output of the model to the final bounding boxes.
 * `ssd_eval_detection_fscore.py`: This script computes the precision, recall and F1-score metrics of an SSD model on a given dataset.
-* `script analyze dataset`: Computes statistics of a given dataset, like number of classes, average size of bounding box or number of bounding boxes per class.
+* `script analyze dataset`: Computes statistics of a given dataset, like average size of bounding box or number of bounding boxes per class. Can be executed specifying the number of classes -n and dataset name -d. *e.g.  python info.py -n 3 -d Udacity*
 * `jupyters/View SSD Boxes.ipynb`: Jupyter notebook useful to debug a SSD model an view the predicted bounding boxes.
 
 ## Results

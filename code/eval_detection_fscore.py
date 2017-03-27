@@ -99,10 +99,10 @@ for i,img_path in enumerate(imfiles):
               break
        
         # You can visualize/save per image results with this:
-        #im = cv2.imread(img_path)
-        #im = yolo_draw_detections(boxes_pred, im, priors, classes, detection_threshold, nms_threshold)
-        #cv2.imshow('', im)
-        #cv2.waitKey(0)
+        im = cv2.imread(img_path)
+        im = yolo_draw_detections(boxes_pred, im, priors, classes, detection_threshold, nms_threshold)
+        cv2.imshow('', im)
+        cv2.waitKey(0)
 
 
     inputs = []

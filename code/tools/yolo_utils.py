@@ -191,7 +191,7 @@ def yolo_draw_detections(boxes, im, anchors, labels, threshold, nms_threshold):
                         thickness = 1
                         size=cv2.getTextSize(mess, font, scale, thickness)
                         cv2.rectangle(im, (left-2,top-size[0][1]-4), (left+size[0][0]+4,top), color, -1)
-                        cv2.putText(im, mess, (left+2,top-2), font, scale, (0,0,0), thickness, cv2.LINE_AA)
+                        cv2.putText(im, mess, (left+2,top-2), font, scale, (0,0,0), thickness, cv2.CV_AA)
 	return imgcv
 
 

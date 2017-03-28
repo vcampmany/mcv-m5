@@ -10,48 +10,53 @@ We have added the following files:
 * `jupyters/View SSD Boxes.ipynb`: Jupyter notebook useful to debug a SSD model an view the predicted bounding boxes.
 
 ## Results
-In this section we report the results obtained in the train, validation and test sets of different datasets.
+In this section we report the results obtained in the train, validation and test sets of different datasets. We also report the average Frames per second (FPS) that a network can process with a batch size of 128.
 
-| TT100K (Train)    | Precision   | Recall  | F1 Score  |
-| ----------------- |:------:| :-----:|:-----:|
-| YOLO              | 0.834      | 0.777      | 0.805     |
-| Tiny YOLO         | 0.662      | 0.662      | 0.548     |
-| SSD pre-trained   | 0.959      | 0.743      | 0.837     |
-| SSD from scratch  | 0.940      | 0.592      | 0.727     |
+For TT100K, the parameter `detection_threshold` was set to 0.3 by evaluating on the validation set.
 
-| TT100K (Val)    | Precision   | Recall  | F1 Score  |
-| ----------------- |:------:| :-----:|:-----:|
-| YOLO              | 0.590      | 0.2      | 0.298     |
-| Tiny YOLO         | 0.5      | 0.061      | 0.109     |
-| SSD pre-trained   | 0.909      | 0.153      | 0.263     |
-| SSD from scratch  | 1      | 0.092      | 0.169     |
+| TT100K (Train)    | Precision   | Recall  | F1 Score  | FPS |
+| ----------------- |:------:| :-----:|:-----:|:-----:|
+| YOLO              | 0.834      | 0.777      | 0.805     | 20 |
+| Tiny YOLO         | 0.662      | 0.662      | 0.548     | 32 |
+| SSD pre-trained   | 0.855      | 0.944      | 0.897     | 97 |
+| SSD from scratch  | 0.940      | 0.592      | 0.727     | 97 |
 
-| TT100K (Test)    | Precision   | Recall  | F1 Score  |
-| ----------------- |:------:| :-----:|:-----:|
-| YOLO              | 0.789      | 0.658      | 0.718     |
-| Tiny YOLO         | X      | X      | X     |
-| SSD pre-trained   | 0.918      | 0.653      | 0.763     |
-| SSD from scratch  | 0.9      | 0.508      | 0.649     |
+| TT100K (Val)    | Precision   | Recall  | F1 Score  | FPS |
+| ----------------- |:------:| :-----:|:-----:|:-----:|
+| YOLO              | 0.590      | 0.2      | 0.298     | 20 |
+| Tiny YOLO         | 0.5      | 0.061      | 0.109     | 32 |
+| SSD pre-trained   | 0.500     | 0.338      | 0.404     | 97 |
+| SSD from scratch  | 1      | 0.092      | 0.169     | 97 |
+
+| TT100K (Test)    | Precision   | Recall  | F1 Score  | FPS |
+| ----------------- |:------:| :-----:|:-----:|:-----:|
+| YOLO              | 0.789      | 0.658      | 0.718     | 20 |
+| Tiny YOLO         | 0.581	      | 0.346      | 0.434     | 32 |
+| SSD pre-trained   | 0.808      | 0.869      | 0.837    | 97 |
+| SSD from scratch  | 0.9      | 0.508      | 0.649     | 97 |
 
 The results on Udacity with different models:
 
-| Udacity (Train)    | Precision   | Recall  | F1 Score  |
-| ----------------- |:------:| :-----:|:-----:|
-| YOLO              | 0.771      | 0.665      | 0.714     |
-| SSD pre-trained   | 0.087      | 0.763      | 0.157     |
-| SSD from scratch  | 0.030      | 0.707      | 0.058     |
+| Udacity (Train)    | Precision   | Recall  | F1 Score  | FPS |
+| ----------------- |:------:| :-----:|:-----:|:-----:|
+| YOLO              | 0.771      | 0.665      | 0.714     | 20 |
+| SSD pre-trained   | 0.087      | 0.763      | 0.157     | 115 |
+| SSD w/o Trucks    | 0.572      | 0.757      | 0.652     | 115 |
+| SSD from scratch  | 0.030      | 0.707      | 0.058     | 115 |
+		
+| Udacity (Val)    | Precision   | Recall  | F1 Score  | FPS |
+| ----------------- |:------:| :-----:|:-----:|:-----:|
+| YOLO              | 0.560      | 0.334      | 0.419     | 20 |
+| SSD pre-trained   | 0.075      | 0.533      | 0.132     | 115 |
+| SSD w/o Trucks    | 0.518      | 0.540      | 0.529     | 115 |
+| SSD from scratch  | 0.026      | 0.547      | 0.051     | 115 |
 
-| Udacity (Val)    | Precision   | Recall  | F1 Score  |
-| ----------------- |:------:| :-----:|:-----:|
-| YOLO              | 0.560      | 0.334      | 0.419     |
-| SSD pre-trained   | 0.075      | 0.533      | 0.132     |
-| SSD from scratch  | 0.026      | 0.547      | 0.051     |
-
-| Udacity (Test)    | Precision   | Recall  | F1 Score  |
-| ----------------- |:------:| :-----:|:-----:|
-| YOLO              | 0.523      | 0.258      | 0.346     |
-| SSD pre-trained   | 0.063      | 0.433      | 0.111     |
-| SSD from scratch  | 0.025      | 0.473      | 0.049     |
+| Udacity (Test)    | Precision   | Recall  | F1 Score  | FPS |
+| ----------------- |:------:| :-----:|:-----:|:-----:|
+| YOLO              | 0.523      | 0.258      | 0.346     | 20 |
+| SSD pre-trained   | 0.063      | 0.433      | 0.111     | 115 |
+| SSD w/o Trucks    | 0.456      | 0.442	    | 0.449     | 115 |
+| SSD from scratch  | 0.025      | 0.473      | 0.049     | 115 |
 
 ## Instructions
 Training an object detector is quite easy. First we have to define a configuration file inside the `config` folder, and then call `train.py` with the desired configuration. To choose between the two detection models implemented, the `model_name` variable should be defined to `"ssd"`or `"yolo"`:

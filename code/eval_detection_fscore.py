@@ -10,6 +10,10 @@ from keras.preprocessing import image
 from models.yolo import build_yolo
 from tools.yolo_utils import *
 
+# Input parameters to select the Dataset and the model used
+dataset_name = 'Udacity' #set to TT100K_detection otherwise
+model_name = 'tiny-yolo' #set to yolo otherwise
+
 # Net output post-processing needs two parameters:
 detection_threshold = 0.6 # Min probablity for a prediction to be considered
 nms_threshold       = 0.2 # Non Maximum Suppression threshold
@@ -20,21 +24,28 @@ if len(sys.argv) < 3:
   print "USAGE: python eval_detection_fscore.py weights_file path_to_images"
   quit()
 
-if 'TT100K' in sys.argv[2]:
-  # only for TT100K
-  classes     = ['i2','i4','i5','il100','il60','il80','io','ip','p10','p11','p12','p19','p23','p26','p27','p3','p5','p6','pg','ph4','ph4.5','ph5','pl100','pl120','pl20','pl30','pl40','pl5','pl50','pl60','pl70','pl80','pm20','pm30','pm55','pn','pne','po','pr40','w13','w32','w55','w57','w59','wo']
-elif 'Udacity' in sys.argv[2]:
-  classes     = ['Car', 'Pedestrian','Truck']
-priors      = [[0.9,1.2], [1.05,1.35], [2.15,2.55], [3.25,3.75], [5.35,5.1]]
+if dataset_name == 'TT100K_detection':
+    classes = ['i2','i4','i5','il100','il60','il80','io','ip','p10','p11','p12','p19','p23','p26','p27','p3','p5','p6','pg','ph4','ph4.5','ph5','pl100','pl120','pl20','pl30','pl40','pl5','pl50','pl60','pl70','pl80','pm20','pm30','pm55','pn','pne','po','pr40','w13','w32','w55','w57','w59','wo']
+elif dataset_name == 'Udacity':
+    classes = ['Car','Pedestrian','Truck']
+else:
+    print "Error: Dataset not found!"
+    quit()
+
+priors = [[0.9,1.2], [1.05,1.35], [2.15,2.55], [3.25,3.75], [5.35,5.1]]
 input_shape = (3, 320, 320)
 
 NUM_PRIORS  = len(priors)
 NUM_CLASSES = len(classes)
 
-if len(sys.argv) == 4:
-	model = build_yolo(img_shape=input_shape,n_classes=NUM_CLASSES, tiny=True)
+if model_name == 'tiny-yolo':
+    tiny_yolo = True
 else:
-	model = build_yolo(img_shape=input_shape,n_classes=NUM_CLASSES, tiny=False)
+    tiny_yolo = False
+
+model = build_yolo(img_shape=input_shape,n_classes=NUM_CLASSES, n_priors=5,
+               load_pretrained=False,freeze_layers_from='base_model',
+               tiny=tiny_yolo)
 
 model.load_weights(sys.argv[1])
 
@@ -115,3 +126,4 @@ for i,img_path in enumerate(imfiles):
     print('Recall     = '+str(r))
     f = 0. if (p+r) == 0 else (2*p*r/(p+r))
     print('F-score    = '+str(f))
+

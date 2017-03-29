@@ -44,7 +44,7 @@ seed_valid                   = 1924            # Random seed for the validation 
 seed_test                    = 1924            # Random seed for the testing shuffle
 
 # Training parameters
-optimizer                    = 'rmsprop'       # Optimizer
+optimizer                    = 'adam'       # Optimizer
 learning_rate                = 0.00001         # Training learning rate
 weight_decay                 = 0.              # Weight decay or L2 parameter norm penalty
 n_epochs                     = 20              # Number of epochs during training

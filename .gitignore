@@ -6,3 +6,5 @@
 
 *.hkl
 code/dataset_info/*
+
+jupyters/.ipynb_checkpoints/*

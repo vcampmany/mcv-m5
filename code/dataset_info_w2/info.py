@@ -3,15 +3,23 @@ from os.path import isfile, join
 import numpy as np
 import os as os
 from PIL import Image
+import argparse
 
 sets = ['train', 'test', 'valid']
 dataset = 'Udacity'
 nclases = 3
 
+parser = argparse.ArgumentParser(description='Analize data')
+parser.add_argument('-n', '--number_classes', type=int, default=None, help='Number of classes')
+parser.add_argument('-d', '--dataset_name', type=str, default=None, help='Dataset name')
+arguments = parser.parse_args()
+
+dataset = arguments.dataset_name
+nclases = arguments.number_classes
 
 for s in sets:
     print("")
-    path = '../../../experiments/Datasets/detection/'+dataset+'/'+s+'/'
+    path = '../../../Datasets/detection/'+dataset+'/'+s+'/'
     #info_file = open(datset+'/'+s+'_info/distr.txt', 'w')
 
     info_file = open(dataset+'_own'+'/'+s+'_info/distr.txt', 'w')

@@ -20,7 +20,7 @@ from models.ssd import build_ssd
 # Segmentation models
 from models.fcn8 import build_fcn8
 #from models.unet import build_unet
-#from models.segnet import build_segnet
+from models.segnet import build_segnet
 #from models.resnetFCN import build_resnetFCN
 #from models.densenetFCN import build_densenetFCN
 
@@ -88,7 +88,7 @@ class Model_Factory():
     def make(self, cf, optimizer=None):
         if cf.model_name in ['lenet', 'alexNet', 'vgg16', 'vgg19', 'resnet50',
                              'InceptionV3', 'fcn8', 'unet', 'segnet', 'wideresnet',
-                             'segnet_basic', 'resnetFCN', 'yolo', 'tiny-yolo', 'ssd']:
+                             'segnet_basic', 'resnetFCN', 'yolo', 'tiny-yolo', 'ssd', 'segnet_vgg']:
 
             if optimizer is None:
                 raise ValueError('optimizer can not be None')

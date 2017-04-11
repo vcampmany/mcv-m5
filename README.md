@@ -22,6 +22,7 @@ Slides summarizing the work done each week
 Explanations of the work and tasks done each week
 * [Week 2 - Object Recognition](https://github.com/vcampmany/mcv-m5/blob/master/week_summaries/week2.md)
 * [Week 4 - Object Detection](https://github.com/vcampmany/mcv-m5/blob/master/week_summaries/week4.md)
+* [Week 6 - Semantic Segmentation](https://github.com/vcampmany/mcv-m5/blob/master/week_summaries/week5.md)
 
 ## References
 

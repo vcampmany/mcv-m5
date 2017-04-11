@@ -3,7 +3,7 @@ During these two weeks we have tried different CNN architectures to perform sema
 
 ## Code
 We have added the following files:
-* `models/segnet.py`:  this is the Keras implementation of the Single Shot Multibox Detector from [this paper](https://arxiv.org/pdf/1511.00561.pdf)
+* `models/segnet.py`:  this is the Keras implementation of the SegNet from [this paper](https://arxiv.org/pdf/1511.00561.pdf)
 * `jupyters/Outputs SegNet`: Jupyter notebook useful to debug a SegNet model an plot the semantic segmentation predicted.
 ## Results
 In this section we report the results obtained in the train and validation sets of different datasets.

@@ -1,10 +1,10 @@
-# Object Detection
+# Semantic Segmentation
 During these two weeks we have tried different CNN architectures to perform semantic segmentation. In particular we trained the following networks: FCN8, and Segnet. As datasets we used Camvid, Cityscapes and Kitti.
 
 ## Code
 We have added the following files:
-* `models/segnet.py`: 
-* `jupyters/Outputs SegNet`: 
+* `models/segnet.py`:  this is the Keras implementation of the Single Shot Multibox Detector from [this paper](https://arxiv.org/pdf/1511.00561.pdf)
+* `jupyters/Outputs SegNet`: Jupyter notebook useful to debug a SegNet model an plot the semantic segmentation predicted.
 ## Results
 In this section we report the results obtained in the train and validation sets of different datasets.
 

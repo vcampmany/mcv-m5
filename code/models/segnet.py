@@ -5,154 +5,126 @@ from keras.layers.core import Activation, Reshape, Permute
 from keras.layers.convolutional import Convolution2D, MaxPooling2D, UpSampling2D, ZeroPadding2D
 from keras.layers.normalization import BatchNormalization
 from keras.utils.visualize_util import plot
+from keras.regularizers import l2
+import keras.backend as K
 
 # Custom layers import
 from layers.ourlayers import NdSoftmax, CropLayer2D, DePool2D
 
+def channel_idx():
+	if K.image_dim_ordering() == 'tf':
+		channel = 3
+	else:
+		channel = 1
+
+	return channel
+
+# functions from github https://github.com/dvazquezcvc/mcv-m5/issues/32
+def downsampling_block_basic(inputs, n_filters, filter_size,W_regularizer=None):
+	# This extra padding is used to prevent problems with different input
+	# sizes. At the end the crop layer remove extra paddings
+	pad = ZeroPadding2D(padding=(1, 1))(inputs)
+	conv = Convolution2D(n_filters, filter_size, filter_size, border_mode='same', W_regularizer=W_regularizer)(pad)
+	bn = BatchNormalization(mode=0, axis=channel_idx())(conv)
+	act = Activation('relu')(bn)
+	maxp = MaxPooling2D(pool_size=(2, 2), strides=(2, 2))(act)
+	return maxp
+
+def upsampling_block_basic(inputs, n_filters, filter_size, unpool_layer=None, W_regularizer=None, use_unpool=True):
+	if use_unpool:
+		up = DePool2D(unpool_layer)(inputs)
+	else:
+		up = UpSampling2D()(inputs)
+	conv = Convolution2D(n_filters, filter_size, filter_size, border_mode='same', W_regularizer=W_regularizer)(up)
+	bn = BatchNormalization(mode=0, axis=channel_idx())(conv)
+	return bn
+
+
+# based on https://github.com/imlab-uiip/keras-segnet/blob/master/build_model.py
+def downsampling_block_vgg(inputs, n_filters, filter_size, n_convs, W_regularizer=None):
+	# This extra padding is used to prevent problems with different input
+	# sizes. At the end the crop layer remove extra paddings
+	conv = ZeroPadding2D(padding=(1, 1))(inputs)
+	
+	for i in range(n_convs): # in VGG there are several 3x3 conv layers together
+		conv = Convolution2D(n_filters, filter_size, filter_size, border_mode='same', W_regularizer=W_regularizer)(conv)
+		bn = BatchNormalization(mode=0, axis=channel_idx())(conv)
+		conv = Activation('relu')(bn)
+
+	maxp = MaxPooling2D(pool_size=(2, 2), strides=(2, 2))(conv)
+	return maxp
+
+def upsampling_block_vgg(inputs, n_filters, filter_size, n_convs, unpool_layer=None, W_regularizer=None, use_unpool=True):
+	# there is only one upsampling at the beginning
+	if use_unpool:
+		up = DePool2D(unpool_layer)(inputs)
+	else:
+		up = UpSampling2D()(inputs)
+
+	conv = up
+	for i in range(n_convs): # in VGG there are several 3x3 conv layers together
+		conv = Convolution2D(n_filters, filter_size, filter_size, border_mode='same', W_regularizer=W_regularizer)(conv)
+		bn = BatchNormalization(mode=0, axis=channel_idx())(conv)
+		conv = Activation('relu')(bn)
+
+	return conv
+
+def build_segnet_basic(inputs, n_classes, depths=[64, 64, 64, 64], filter_size=7, l2_reg=0.):
+	""" encoding layers """
+	enc1 = downsampling_block_basic(inputs, depths[0], filter_size, l2(l2_reg))
+	enc2 = downsampling_block_basic(enc1, depths[1], filter_size, l2(l2_reg))
+	enc3 = downsampling_block_basic(enc2, depths[2], filter_size, l2(l2_reg))
+	enc4 = downsampling_block_basic(enc3, depths[3], filter_size, l2(l2_reg))
+
+	""" decoding layers """
+	dec1 = upsampling_block_basic(enc4, depths[3], filter_size, enc4, l2(l2_reg))
+	dec2 = upsampling_block_basic(dec1, depths[2], filter_size, enc3, l2(l2_reg))
+	dec3 = upsampling_block_basic(dec2, depths[1], filter_size, enc2, l2(l2_reg))
+	dec4 = upsampling_block_basic(dec3, depths[0], filter_size, enc1, l2(l2_reg))
+
+	""" logits """
+	l1 = Convolution2D(n_classes, 1, 1, border_mode='valid')(dec4)
+	score = CropLayer2D(inputs, name='score')(l1)
+	softmax_segnet = NdSoftmax()(score)
+
+	# Complete model
+	model = Model(input=inputs, output=softmax_segnet)
+
+	return model
+
+def build_segnet_vgg(inputs, n_classes, depths=[64, 128, 256, 512, 512], filter_size=3, l2_reg=0.):
+	""" encoding layers """
+	enc1 = downsampling_block_vgg(inputs, depths[0], filter_size, 2, l2(l2_reg))
+	enc2 = downsampling_block_vgg(enc1, depths[1], filter_size, 2, l2(l2_reg))
+	enc3 = downsampling_block_vgg(enc2, depths[2], filter_size, 3, l2(l2_reg))
+	enc4 = downsampling_block_vgg(enc3, depths[3], filter_size, 3, l2(l2_reg))
+	enc5 = downsampling_block_vgg(enc4, depths[4], filter_size, 3, l2(l2_reg))
+
+	""" decoding layers """
+	dec1 = upsampling_block_vgg(enc4, depths[4], filter_size, 3, enc5, l2(l2_reg))
+	dec2 = upsampling_block_vgg(dec1, depths[3], filter_size, 3, enc4, l2(l2_reg))
+	dec3 = upsampling_block_vgg(dec2, depths[2], filter_size, 3, enc3, l2(l2_reg))
+	dec4 = upsampling_block_vgg(dec3, depths[1], filter_size, 2, enc2, l2(l2_reg))
+	dec5 = upsampling_block_vgg(dec3, depths[0], filter_size, 2, enc1, l2(l2_reg))
+
+	""" logits """
+	l1 = Convolution2D(n_classes, 1, 1, border_mode='valid')(dec5)
+	score = CropLayer2D(inputs, name='score')(l1)
+	softmax_segnet = NdSoftmax()(score)
+
+	# Complete model
+	model = Model(input=inputs, output=softmax_segnet)
+
+	return model
 
 def build_segnet(img_shape=(224, 224, 3), n_classes=1000, l2_reg=0., freeze_layers_from='base_model', 
 				path_weights=None, basic=False):
 
-	kernel = 3
-	block1_filter = 64
-	block2_filter = 128
-	block3_filter = 256
-	block4_filter = 512
-	block5_filter = 512
-
-    # VGG like SegNet
-	if not basic:
-		#img_shape=(224, 224, 3)
-		inputs = Input(img_shape)
-		###########################################3
-		## ENCODING BLOCK
-		###########################################3
-		# VGG block 1
-		conv1_1 = Convolution2D(block1_filter, kernel, kernel, border_mode='same')(inputs)
-		bnorm1_1 = BatchNormalization()(conv1_1)
-		act1_1 = Activation('relu')(bnorm1_1)
-		conv1_2 = Convolution2D(block1_filter, kernel, kernel, border_mode='same')(act1_1)
-		bnorm1_2 = BatchNormalization()(conv1_2)
-		act1_2 = Activation('relu')(bnorm1_2)
-		pool1_1 = MaxPooling2D(pool_size=(2, 2), strides=(2, 2))(act1_2)
-
-		# VGG block 2
-		conv2_1 = Convolution2D(block2_filter, kernel, kernel, border_mode='same')(pool1_1)
-		bnorm2_1 = BatchNormalization()(conv2_1)
-		act2_1 = Activation('relu')(bnorm2_1)
-		conv2_2 = Convolution2D(block2_filter, kernel, kernel, border_mode='same')(act2_1)
-		bnorm2_2 = BatchNormalization()(conv2_2)
-		act2_2 = Activation('relu')(bnorm2_2)
-		pool2_1 = MaxPooling2D(pool_size=(2, 2), strides=(2, 2))(act2_2)
-
-		# VGG block 3
-		conv3_1 = Convolution2D(block3_filter, kernel, kernel, border_mode='same')(pool2_1)
-		bnorm3_1 = BatchNormalization()(conv3_1)
-		act3_1 = Activation('relu')(bnorm3_1)
-		conv3_2 = Convolution2D(block3_filter, kernel, kernel, border_mode='same')(act3_1)
-		bnorm3_2 = BatchNormalization()(conv3_2)
-		act3_2 = Activation('relu')(bnorm3_2)
-		conv3_3 = Convolution2D(block3_filter, kernel, kernel, border_mode='same')(act3_2)
-		bnorm3_3 = BatchNormalization()(conv3_3)
-		act3_3 = Activation('relu')(bnorm3_3)
-		pool3_1 = MaxPooling2D(pool_size=(2, 2), strides=(2, 2))(act3_3)
-
-		# VGG block 4
-		conv4_1 = Convolution2D(block4_filter, kernel, kernel, border_mode='same')(pool3_1)
-		bnorm4_1 = BatchNormalization()(conv4_1)
-		act4_1 = Activation('relu')(bnorm4_1)
-		conv4_2 = Convolution2D(block4_filter, kernel, kernel, border_mode='same')(act4_1)
-		bnorm4_2 = BatchNormalization()(conv4_2)
-		act4_2 = Activation('relu')(bnorm4_2)
-		conv4_3 = Convolution2D(block4_filter, kernel, kernel, border_mode='same')(act4_2)
-		bnorm4_3 = BatchNormalization()(conv4_3)
-		act4_3 = Activation('relu')(bnorm4_3)
-		pool4_1 = MaxPooling2D(pool_size=(2, 2), strides=(2, 2))(act4_3)
-
-		# VGG block 5
-		conv5_1 = Convolution2D(block5_filter, kernel, kernel, border_mode='same')(pool4_1)
-		bnorm5_1 = BatchNormalization()(conv5_1)
-		act5_1 = Activation('relu')(bnorm5_1)
-		conv5_2 = Convolution2D(block5_filter, kernel, kernel, border_mode='same')(act5_1)
-		bnorm5_2 = BatchNormalization()(conv5_2)
-		act5_2 = Activation('relu')(bnorm5_2)
-		conv5_3 = Convolution2D(block5_filter, kernel, kernel, border_mode='same')(act5_2)
-		bnorm5_3 = BatchNormalization()(conv5_3)
-		act5_3 = Activation('relu')(bnorm5_3)
-		pool5_1 = MaxPooling2D(pool_size=(2, 2), strides=(2, 2))(act5_3)
-
-		###########################################3
-		## DECODING BLOCK
-		###########################################3
-		# Decoder block 1
-		up1_1 = UpSampling2D(size=(2, 2))(pool5_1)
-		#up1_1 = DePool2D(pool5_1, size=(2, 2), dim_ordering='tf')(pool5_1)
-		conv6_1 = Convolution2D(block5_filter, kernel, kernel, border_mode='same')(up1_1)
-		bnorm6_1 = BatchNormalization()(conv6_1)
-		act6_1 = Activation('relu')(bnorm6_1)
-		conv6_2 = Convolution2D(block5_filter, kernel, kernel, border_mode='same')(act6_1)
-		bnorm6_2 = BatchNormalization()(conv6_2)
-		act6_2 = Activation('relu')(bnorm6_2)
-		conv6_3 = Convolution2D(block5_filter, kernel, kernel, border_mode='same')(act6_2)
-		bnorm6_3 = BatchNormalization()(conv6_3)
-		act6_3 = Activation('relu')(bnorm6_3)
-
-		# Decoder block 2
-		up2_1 = UpSampling2D(size=(2, 2))(act6_3)
-		#up2_1 = DePool2D(pool4_1, size=(2,2), dim_ordering='tf')(act1_3)
-		conv7_1 = Convolution2D(block4_filter, kernel, kernel, border_mode='same')(up2_1)
-		bnorm7_1 = BatchNormalization()(conv7_1)
-		act7_1 = Activation('relu')(bnorm7_1)
-		conv7_2 = Convolution2D(block4_filter, kernel, kernel, border_mode='same')(act7_1)
-		bnorm7_2 = BatchNormalization()(conv7_2)
-		act7_2 = Activation('relu')(bnorm7_2)
-		conv7_3 = Convolution2D(block4_filter, kernel, kernel, border_mode='same')(act7_2)
-		bnorm7_3 = BatchNormalization()(conv7_3)
-		act7_3 = Activation('relu')(bnorm7_3)
-
-		# Decoder block 3
-		up3_1 = UpSampling2D(size=(2, 2))(act7_3)
-		#up3_1 = DePool2D(pool3_1, size=(2,2), dim_ordering='tf')(act2_3)
-		conv8_1 = Convolution2D(block3_filter, kernel, kernel, border_mode='same')(up3_1)
-		bnorm8_1 = BatchNormalization()(conv8_1)
-		act8_1 =Activation('relu')(bnorm8_1)
-		conv8_2 = Convolution2D(block3_filter, kernel, kernel, border_mode='same')(act8_1)
-		bnorm8_2 = BatchNormalization()(conv8_2)
-		act8_2 = Activation('relu')(bnorm8_2)
-		conv8_3 = Convolution2D(block3_filter, kernel, kernel, border_mode='same')(act8_2)
-		bnorm8_3 = BatchNormalization()(conv8_3)
-		act8_3 = Activation('relu')(bnorm8_3)
-
-		# Decoder block 4
-		up4_1 = UpSampling2D(size=(2, 2))(act8_3)
-		#up4_1 = DePool2D(pool3_1, size=(2, 2), dim_ordering='tf')(act3_3)
-		conv9_1 = Convolution2D(block2_filter, kernel, kernel, border_mode='same')(up4_1)
-		bnorm9_1= BatchNormalization()(conv9_1)
-		act9_1 = Activation('relu')(bnorm9_1)
-		conv9_2 = Convolution2D(block3_filter, kernel, kernel, border_mode='same')(act9_1)
-		bnorm9_2 = BatchNormalization()(conv9_2)
-		act9_2 = Activation('relu')(bnorm9_2)
-
-		# Decoder block 5
-		up5_1 = UpSampling2D(size=(2, 2))(act9_2)
-		#up5_1 = DePool2D(pool2_1, size=(2, 2), dim_ordering='tf')(act4_2)
-		conv10_1 = Convolution2D(block1_filter, kernel, kernel, border_mode='same')(up5_1)
-		bnorm10_1 = BatchNormalization()(conv10_1)
-		act10_1 = Activation('relu')(bnorm10_1)
-		conv10_2 = Convolution2D(block1_filter, kernel, kernel, border_mode='same')(act10_1)
-		bnorm10_2 = BatchNormalization()(conv10_2)
-		#act5_2 = Activation('relu')(bnorm5_2)
-		
-		# Fit channels to number of classes 
-		conv11_1 = Convolution2D(n_classes, 1, 1, border_mode='valid')(bnorm10_2)
-		
-		softmax = NdSoftmax()(conv11_1)
-#		print softmax.shape
-#		quit()
-		model = Model(input=inputs, output=softmax)
-
+	inputs = Input(img_shape)
+	if basic:
+		model = build_segnet_basic(inputs, n_classes)
 	else:
-		print "basic segnet not implemented yet"
+		model = build_segnet_vgg(inputs, n_classes)
 
 	return model
 

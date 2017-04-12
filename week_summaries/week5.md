@@ -3,8 +3,8 @@ During these two weeks we have tried different CNN architectures to perform sema
 
 ## Code
 We have added the following files:
-* `models/segnet.py`:  this is the Keras implementation of the SegNet from [this paper](https://arxiv.org/pdf/1511.00561.pdf)
-* `jupyters/Outputs SegNet`: Jupyter notebook useful to debug a SegNet model an plot the semantic segmentation predicted.
+* `models/segnet.py`:  this is the Keras implementation of the SegNet from [this paper](https://arxiv.org/pdf/1511.00561.pdf). It has both the basic and VGG implementations of the model.
+* `jupyters/Outputs SegNet`: Jupyter notebook useful to debug a SegNet model an plot the semantic segmentation predicted. It loads a trained SegNet and predicts segmentations from images, showing the segmentation in the desired color map. 
 ## Results
 In this section we report the results obtained in the train and validation sets of different datasets.
 
@@ -30,16 +30,19 @@ For Segnet:
 | ----------------- |:------:| :-----:|:-----:|
 | Camvid (Basic)    | 0.949      | 0.746      | 0.135     | 
 | Camvid (VGG)      | 0.98      | 0.913      | 0.046     |
+| Camvid (VGG+Dataug) | 0.971 | 0.865	| 0.068 |
+
 
 
 | Segnet (Val)    | Accuracy   | jaccard  | Loss  | 
 | ----------------- |:------:| :-----:|:-----:|
 | Camvid (Basic)    | 0.918      | 0.626      | 0.264     | 
 | Camvid (VGG)      | 0.946      | 0.737      | 0.274     |
+| Camvid (VGG+Dataug) | 0.951    | 0.865	    | 0.199     |
 
 
 ## Instructions
-Training an object detector is quite easy. First we have to define a configuration file inside the `config` folder, and then call `train.py` with the desired configuration. To choose between the two detection models implemented, the `model_name` variable should be defined to `"fcn8"` `"segnet_basic"` or `"segnet_vgg"`:
+Training these networks for semantic segmentation is quite easy. First we have to define a configuration file inside the `config` folder, and then call `train.py` with the desired configuration. To choose between the two detection models implemented, the `model_name` variable should be defined to `"fcn8"` `"segnet_basic"` or `"segnet_vgg"`:
 ```
 python train.py -c config/CONFIG_FILE
 ```

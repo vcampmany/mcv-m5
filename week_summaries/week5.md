@@ -5,6 +5,7 @@ During these two weeks we have tried different CNN architectures to perform sema
 We have added the following files:
 * `models/segnet.py`:  this is the Keras implementation of the SegNet from [this paper](https://arxiv.org/pdf/1511.00561.pdf). It has both the basic and VGG implementations of the model.
 * `jupyters/Outputs SegNet`: Jupyter notebook useful to debug a SegNet model an plot the semantic segmentation predicted. It loads a trained SegNet and predicts segmentations from images, showing the segmentation in the desired color map. 
+* `script analyze dataset`: Extracts probability distribution for each dataset class, splited in training, test and validation sets. Allows to analyze our datasets distribution in order to further understanding of our results. Can be executed specifying the number of classes -n and dataset name -d. e.g. python info.py -n 12 -d camvid
 ## Results
 In this section we report the results obtained in the train and validation sets of different datasets.
 

@@ -8,7 +8,7 @@ Autonomous Driving from an inboard camera is a highly complex task that can be a
 * Victor Campmany - vcampmany@gmail.com
 * Guillem Cucurull - gcucurull@gmail.com
 
-## Paper (under construction)
+## Paper
 The paper will be updated weekly according to the work done in the project.
 
 [Scene Understanding for Autonomous Vehicles](https://www.overleaf.com/read/tkmjzgbxwzmt)
